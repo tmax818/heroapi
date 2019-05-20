@@ -8,6 +8,8 @@ router.get('/quotes', cors(), (req, res) => {
   res.json(quoteslist);
 });
 
-router.get('/:id', cors(), (req, res) => res.json(quoteslist[req.params.id]));
+router.get('/quotes/:id', cors(), (req, res) =>
+  res.json(quoteslist[req.params.id])
+);
 
 module.exports = router;
