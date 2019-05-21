@@ -5,6 +5,13 @@ const Todo = require('../../../models/todo');
 
 router.use(express.json());
 
+////////////// Create //////////
+router.post('/', cors(), (req, res) => {
+  let item = new Todo(req.body);
+  item.save();
+});
+
+///////////// Read /////////////
 router.get('/', cors(), (req, res) => {
   Todo.find({})
     .then(todo => {
@@ -15,9 +22,15 @@ router.get('/', cors(), (req, res) => {
     });
 });
 
-router.post('/', cors(), (req, res) => {
-  let item = new Todo({ title: req.body.title, complete: req.body.complete });
-  item.save();
+router.get('/:id', cors(), (req, res) => {
+  let id = req.params.id;
+  Todo.findById(id, (err, todo) => {
+    res.json(todo);
+  });
 });
+
+//////////// Update ////////////////
+
+/////////// Delete ////////////////
 
 module.exports = router;
