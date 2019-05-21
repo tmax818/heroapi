@@ -1,16 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const router = express.Router();
-const User = require('../../../models/todo');
+const Todo = require('../../../models/todo');
+
+router.use(express.json());
 
 router.get('/', cors(), (req, res) => {
-  User.find({})
-    .then(user => {
-      res.json(user);
+  Todo.find({})
+    .then(todo => {
+      res.json(todo);
     })
     .catch(err => {
       console.log('error!', err);
     });
+});
+
+router.post('/', cors(), (req, res) => {
+  let item = new Todo({ title: req.body.title, complete: req.body.complete });
+  item.save();
 });
 
 module.exports = router;
